@@ -1,13 +1,14 @@
-from structures import Activity, Time, DayBlock, Week
+from structures import Energy, Activity, Time, DayBlock, Week
+from scheduler import match_activity
+
 
 def main():
-    # example = Activity("calisthenics", "#sports", "high", 60, ["morning"], Time(8,30))
+    example = Activity("calisthenics", "#sports", Energy.HIGH, Time(1,45))
     # print(example)
     week = Week()
-    print(week)
-
-    for day in week.days:
-        print(day)
+    
+    match_activity(week.days[0], example)
+    print(week.days[0])
 
 if __name__ == "__main__":
     main()
