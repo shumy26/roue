@@ -1,4 +1,5 @@
 from enum import Enum 
+from math import ceil
 
 class Energy(Enum):
     LOW = "low"
@@ -39,7 +40,7 @@ class Time:
     def __truediv__(self, other):
         total_time_self = self.hour * 60 + self.minute
         total_time_other = other.hour * 60 + other.minute
-        return int(total_time_self / total_time_other)
+        return ceil(total_time_self / total_time_other)
 
 
     
