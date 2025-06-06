@@ -39,9 +39,7 @@ class Time:
     def __truediv__(self, other):
         total_time_self = self.hour * 60 + self.minute
         total_time_other = other.hour * 60 + other.minute
-        if (self.minute + other.minute) % 60 != 0:
-            return total_time_self / total_time_other + 1
-        return total_time_self / total_time_other
+        return int(total_time_self / total_time_other)
 
 
     
