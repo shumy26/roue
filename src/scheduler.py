@@ -55,6 +55,16 @@ def remove_activity_from_time(day, time):
         day.times[time_idx].is_free = True
         time_idx += 1
     
-def remove_whole_activity(day, activity):
-    start_time = day.times[find_index_of_activity(day, activity)].get_start_time()
-    remove_activity_from_time(day, start_time)
+def remove_whole_activity(day, activity_name):
+    check = False
+    for time in day.times:
+        if not time.is_free and time.activity.name.lower() == activity_name.lower():
+            activity = time.activity
+            check = True
+            break
+    if check:
+        start_time = day.times[find_index_of_activity(day, activity)].get_start_time()
+        remove_activity_from_time(day, start_time)
+        print(f"Removed activity {activity_name} at time {start_time}")
+    else:
+        print(f"Could not remove {activity_name}")

@@ -24,8 +24,12 @@ class Time:
         self.minute = minute
     
     def __repr__(self):
-        if self.hour < 10:
+        if self.hour < 10 and self.minute == 0:
+            return f"0{self.hour}h00"
+        elif self.hour < 10:
             return f"0{self.hour}h{self.minute}"
+        elif self.minute == 0:
+            return f"{self.hour}h00"
         return f"{self.hour}h{self.minute}"
     
     def __add__(self, other):
