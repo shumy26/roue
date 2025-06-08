@@ -28,9 +28,18 @@ def create_week():
 
       while True:
          activity = input("Enter here the next activity (or 'done' to end):\n")
-         actvty = activity.split(",")
          if activity == "done":
             break
+         actvty = activity.split(",")
+         if actvty[2] == "low":
+            actvty[2] = Energy.LOW
+         elif actvty[2] == "medium":
+            actvty[2] = Energy.MEDIUM
+         elif actvty[2] == "high":
+            actvty[2] = Energy.HIGH
+         else:
+            raise ValueError("Energy must be either 'low', 'medium' or 'high'")
+         
          if len(actvty) == 4:   
             duration_prs = actvty[3].split(":")
             duration_lst = [int(duration_prs[i]) for i in range(2)]
