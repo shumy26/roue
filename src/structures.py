@@ -1,5 +1,6 @@
 from enum import Enum 
 from math import ceil
+import yaml
 
 class Energy(Enum):
     LOW = "low"
@@ -50,7 +51,15 @@ class Time:
         if (self.hour == other.hour) and (self.minute == other.minute):
             return True
         return False
-
+    
+    def __le__(self, other):
+        if not isinstance(other, Time):
+            raise AttributeError("Second object is not a Time")
+        if self.hour > other.hour:
+            return False
+        elif self.hour == other.hour:
+            return self.minute <= other.minute
+        return True
 
 class TimeBlock:
     def __init__(self, time_start, duration, energy, is_free=True, activity=None):
@@ -76,34 +85,67 @@ class TimeBlock:
         self.is_free = False
 
 class DayBlock:
-    def __init__(self, name, is_weekend=False):
+    def __init__(self, name, config, is_weekend=False):
         self.__is_weekend = is_weekend
         self.name = name
-        if self.__is_weekend:
-            self.times = [TimeBlock(Time(h,m), Time(0,30), Energy.MEDIUM) for h in range(7,8) for m in (0,30)] + \
-                         [TimeBlock(Time(h,m), Time(0,30), Energy.HIGH) for h in range(8,13) for m in (0,30)] + \
-                         [TimeBlock(Time(h,m), Time(0,30), Energy.LOW) for h in range(13,14) for m in (0,30)] + \
-                         [TimeBlock(Time(h,m), Time(0,30), Energy.MEDIUM) for h in range(14,16) for m in (0,30)] +\
-                         [TimeBlock(Time(h,m), Time(0,30), Energy.HIGH) for h in range(16,19) for m in (0,30)] +\
-                         [TimeBlock(Time(h,m), Time(0,30), Energy.LOW) for h in range(19,24) for m in (0,30)]
-        else:
-            self.times = [TimeBlock(Time(h,m), Time(0,30), Energy.LOW) for h in range(5,6) for m in (0,30)] + \
-                         [TimeBlock(Time(h,m), Time(0,30), Energy.MEDIUM) for h in range(7,8) for m in (0,30)] +\
-                         [TimeBlock(Time(h,m), Time(0,30), Energy.HIGH) for h in range(8,13) for m in (0,30)] + \
-                         [TimeBlock(Time(h,m), Time(0,30), Energy.LOW) for h in range(13,14) for m in (0,30)] + \
-                         [TimeBlock(Time(h,m), Time(0,30), Energy.MEDIUM) for h in range(14,16) for m in (0,30)] +\
-                         [TimeBlock(Time(h,m), Time(0,30), Energy.HIGH) for h in range(16,19) for m in (0,30)] +\
-                         [TimeBlock(Time(h,m), Time(0,30), Energy.LOW) for h in range(19,24) for m in (0,30)]
+        self.__config = config
+        self.times = self.create_day(self.__config)
+        # if self.__is_weekend:
+        #     self.times = [TimeBlock(Time(h,m), Time(0,30), Energy.MEDIUM) for h in range(7,8) for m in (0,30)] + \
+        #                  [TimeBlock(Time(h,m), Time(0,30), Energy.HIGH) for h in range(8,13) for m in (0,30)] + \
+        #                  [TimeBlock(Time(h,m), Time(0,30), Energy.LOW) for h in range(13,14) for m in (0,30)] + \
+        #                  [TimeBlock(Time(h,m), Time(0,30), Energy.MEDIUM) for h in range(14,16) for m in (0,30)] +\
+        #                  [TimeBlock(Time(h,m), Time(0,30), Energy.HIGH) for h in range(16,19) for m in (0,30)] +\
+        #                  [TimeBlock(Time(h,m), Time(0,30), Energy.LOW) for h in range(19,24) for m in (0,30)]
+        # else:
+        #     self.times = [TimeBlock(Time(h,m), Time(0,30), Energy.LOW) for h in range(5,6) for m in (0,30)] + \
+        #                  [TimeBlock(Time(h,m), Time(0,30), Energy.MEDIUM) for h in range(7,8) for m in (0,30)] +\
+        #                  [TimeBlock(Time(h,m), Time(0,30), Energy.HIGH) for h in range(8,13) for m in (0,30)] + \
+        #                  [TimeBlock(Time(h,m), Time(0,30), Energy.LOW) for h in range(13,14) for m in (0,30)] + \
+        #                  [TimeBlock(Time(h,m), Time(0,30), Energy.MEDIUM) for h in range(14,16) for m in (0,30)] +\
+        #                  [TimeBlock(Time(h,m), Time(0,30), Energy.HIGH) for h in range(16,19) for m in (0,30)] +\
+        #                  [TimeBlock(Time(h,m), Time(0,30), Energy.LOW) for h in range(19,24) for m in (0,30)]
 
     def __repr__(self):
         return f"{[time for time in self.times]}"
+    
+    def create_day(self, config):
+        if self.__is_weekend:
+            start_time_string = config["day_start_weekend"].split(":")
+            start_time = Time(int(start_time_string[0]), int(start_time_string[1]))
+            energy_levels_dict = config["energy_levels_weekend"]
+        else:
+            start_time_string = config["day_start_weekday"].split(":")
+            start_time = Time(int(start_time_string[0]), int(start_time_string[1]))
+            energy_levels_dict = config["energy_levels_weekday"]
+        
+        energy_times_dict = {"low": [], "medium": [], "high": []}
+        for key, value in energy_levels_dict.items():
+            key_time_string = key.split(":")
+            key_time = Time(int(key_time_string[0]), int(key_time_string[1]))
+            energy_times_dict[value].append(key_time)
+        
+        times = []
+        current_time = start_time
+        current_energy = Energy.LOW 
+        while current_time <= Time(24,0):
+            if current_time in energy_times_dict["low"]:
+                current_energy = Energy.LOW
+            elif current_time in energy_times_dict["medium"]:
+                current_energy = Energy.MEDIUM
+            elif current_time in energy_times_dict["high"]:
+                current_energy = Energy.HIGH 
+            times.append(TimeBlock(current_time, Time(0,30), current_energy))
+            current_time += Time(0,30)
+
+        return times        
 
 
 class Week:
-    def __init__(self):
-        self.days = [DayBlock("Sun", True)] + \
-                    [DayBlock(name, False) for name in ("Mon", "Tue", "Wed", "Thu", "Fri")] + \
-                    [DayBlock("Sat", True)]
+    def __init__(self, config):
+        self.days = [DayBlock("Sun", config, True)] + \
+                    [DayBlock(name, config, False) for name in ("Mon", "Tue", "Wed", "Thu", "Fri")] + \
+                    [DayBlock("Sat", config,  True)]
         
     def __repr__(self):
         return f"{[day.name for day in self.days]}"
