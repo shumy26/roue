@@ -8,12 +8,11 @@ class Energy(Enum):
     HIGH = "high"
 
 class Activity:
-    def __init__(self, name, tag, energy, duration, time_requirement=None, set_time=None):
+    def __init__(self, name, tag, energy, duration, set_time=None):
         self.name = name
         self.tag = tag
         self.energy = energy
         self.duration = duration
-        self.time_requirement = time_requirement
         self.set_time = set_time
 
     def __repr__(self):
@@ -25,6 +24,8 @@ class Time:
         self.minute = minute
     
     def __repr__(self):
+        if self.hour < 10:
+            return f"0{self.hour}h{self.minute}"
         return f"{self.hour}h{self.minute}"
     
     def __add__(self, other):
@@ -128,7 +129,7 @@ class DayBlock:
         times = []
         current_time = start_time
         current_energy = Energy.LOW 
-        while current_time <= Time(24,0):
+        while current_time <= Time(23,30):
             if current_time in energy_times_dict["low"]:
                 current_energy = Energy.LOW
             elif current_time in energy_times_dict["medium"]:
@@ -139,6 +140,12 @@ class DayBlock:
             current_time += Time(0,30)
 
         return times        
+    
+    def print_day(self):
+        print(f"\n*----------{self.name}------------*")
+        for time in self.times:
+            print(time)
+        print(f"*-------------------------*\n")    
 
 
 class Week:
@@ -149,4 +156,8 @@ class Week:
         
     def __repr__(self):
         return f"{[day.name for day in self.days]}"
+    
+    def print_week(self):
+        for day in self.days:
+            day.print_day()
         

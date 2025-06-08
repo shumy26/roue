@@ -1,8 +1,8 @@
-day_start_weekday: "04:00"
+day_start_weekday: "05:00"
 day_start_weekend: "07:00"
 
 energy_levels_weekday: 
-  "04:00" : low
+  "05:00" : low
   "07:00" : medium
   "08:00" : high
   "13:00" : low
