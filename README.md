@@ -73,3 +73,50 @@ energy_levels_weekend:
 MIT License. See [LICENSE](LICENSE).
 
 ---
+
+## Example Output:
+
+```
+╔═══════╦═══════╦═══════╦═══════╦═══════╦═══════╦═══════╦═══════╗
+║       ║ Sun   ║ Mon   ║ Tue   ║ Wed   ║ Thu   ║ Fri   ║ Sat   ║
+╠═══════╬═══════╬═══════╬═══════╬═══════╬═══════╬═══════╬═══════╣
+║ 05h00 ║       ║       ║       ║       ║       ║       ║       ║
+║ 05h30 ║       ║       ║       ║       ║       ║       ║       ║
+║ 06h00 ║       ║       ║       ║       ║       ║       ║       ║
+║ 06h30 ║       ║       ║       ║       ║       ║       ║       ║
+║ 07h00 ║       ║Coffee ║Coffee ║Coffee ║Coffee ║Coffee ║       ║
+║ 07h30 ║       ║Coffee ║Coffee ║Coffee ║Coffee ║Coffee ║       ║
+║ 08h00 ║       ║Reading║Reading║Reading║Reading║Reading║       ║
+║ 08h30 ║       ║Reading║Reading║Reading║Reading║Reading║       ║
+║ 09h00 ║       ║Walk   ║Walk   ║Walk   ║Walk   ║Walk   ║       ║
+║ 09h30 ║       ║Walk   ║Walk   ║Walk   ║Walk   ║Walk   ║       ║
+║ 10h00 ║       ║Uni    ║Uni    ║Uni    ║Uni    ║Uni    ║       ║
+║ 10h30 ║       ║Uni    ║Uni    ║Uni    ║Uni    ║Uni    ║       ║
+║ 11h00 ║       ║Uni    ║Uni    ║Uni    ║Uni    ║Uni    ║       ║
+║ 11h30 ║       ║Uni    ║Uni    ║Uni    ║Uni    ║Uni    ║       ║
+║ 12h00 ║       ║Lunch  ║Lunch  ║Lunch  ║Lunch  ║Lunch  ║       ║
+║ 12h30 ║       ║Lunch  ║Lunch  ║Lunch  ║Lunch  ║Lunch  ║       ║
+║ 13h00 ║       ║Lunch  ║Lunch  ║Lunch  ║Lunch  ║Lunch  ║       ║
+║ 13h30 ║       ║Lunch  ║Lunch  ║Lunch  ║Lunch  ║Lunch  ║       ║
+║ 14h00 ║       ║Uni    ║Uni    ║Uni    ║Uni    ║Uni    ║       ║
+║ 14h30 ║       ║Uni    ║Uni    ║Uni    ║Uni    ║Uni    ║       ║
+║ 15h00 ║       ║Uni    ║Uni    ║Uni    ║Uni    ║Uni    ║       ║
+║ 15h30 ║       ║Uni    ║Uni    ║Uni    ║Uni    ║Uni    ║       ║
+║ 16h00 ║       ║Uni    ║Uni    ║Uni    ║Uni    ║Uni    ║       ║
+║ 16h30 ║       ║Uni    ║Uni    ║Uni    ║Uni    ║Uni    ║       ║
+║ 17h00 ║       ║Uni    ║Uni    ║Uni    ║Uni    ║Uni    ║       ║
+║ 17h30 ║       ║Uni    ║Uni    ║Uni    ║Uni    ║Uni    ║       ║
+║ 18h00 ║       ║       ║       ║       ║       ║       ║       ║
+║ 18h30 ║       ║       ║       ║       ║       ║       ║       ║
+║ 19h00 ║       ║       ║       ║       ║       ║       ║       ║
+║ 19h30 ║       ║       ║       ║       ║       ║       ║       ║
+║ 20h00 ║       ║       ║       ║       ║       ║       ║       ║
+║ 20h30 ║       ║       ║       ║       ║       ║       ║       ║
+║ 21h00 ║       ║       ║       ║       ║       ║       ║       ║
+║ 21h30 ║       ║       ║       ║       ║       ║       ║       ║
+║ 22h00 ║       ║       ║       ║       ║       ║       ║       ║
+║ 22h30 ║       ║       ║       ║       ║       ║       ║       ║
+║ 23h00 ║       ║       ║       ║       ║       ║       ║       ║
+║ 23h30 ║       ║       ║       ║       ║       ║       ║       ║
+╚═══════╩═══════╩═══════╩═══════╩═══════╩═══════╩═══════╩═══════╝
+```
