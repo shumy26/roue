@@ -21,8 +21,7 @@ def create_week():
       "<activity-name>,<energy>,<duration>,[set-time]\n\n" \
       "EXAMPLE: Coding,medium,03:00,20:30\n"
       "NOTE: <energy> must be either 'low', 'medium' or 'high'\n" \
-      "NOTE: DO NOT INCLUDE SPACES BETWEEN THE ARGUMENTS\n"
-      "NOTE: Once you're defining activities for the day, simply write 'done'\n" \
+      "NOTE: DO NOT INCLUDE SPACES BETWEEN THE ARGUMENTS\n" \
       "*----------------------------------------------------*")
 
       while True:
