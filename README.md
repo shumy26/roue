@@ -2,10 +2,6 @@
 
 **roue** is a configurable planner CLI tool that will schedule your activities for the week, based on your energy levels for each hour of the day (you can configure this).
 
-
-Roue is a command-line tool for planning your week based on your energy levels. You define your daily energy patterns and add activities, and Roue helps you schedule them into your week, ensuring you match the right activity to the right energy slot.
-
-
 ## Features
 
 - **Configurable energy levels** for weekdays and weekends via YAML
