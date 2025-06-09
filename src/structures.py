@@ -8,15 +8,14 @@ class Energy(Enum):
     HIGH = "high"
 
 class Activity:
-    def __init__(self, name, tag, energy, duration, set_time=None):
+    def __init__(self, name, energy, duration, set_time=None):
         self.name = name
-        self.tag = tag
         self.energy = energy
         self.duration = duration
         self.set_time = set_time
 
     def __repr__(self):
-        return f"{self.name}(duration: {self.duration}, starts at: {self.set_time})"
+        return f"{self.name}"
     
 class Time:
     def __init__(self, hour, minute):
@@ -43,6 +42,21 @@ class Time:
             new_minute = self.minute + other.minute
         return Time(new_hour, new_minute)
     
+    def __sub__(self, other):
+        if not isinstance(other, Time):
+            raise AttributeError("Second object is not a Time")
+        total_self = self.hour * 60 + self.minute
+        total_other = other.hour * 60 + other.minute
+        diff = total_self - total_other
+        return Time(diff // 60, diff % 60)
+    
+    def __mul__(self, other):
+        if not isinstance(other, int):
+            raise TypeError("Can only multiply Time by an integer.")
+        total_minutes = (self.hour * 60 + self.minute) * other
+        return Time(total_minutes // 60, total_minutes % 60)
+
+    
     def __truediv__(self, other):
         total_time_self = self.hour * 60 + self.minute
         total_time_other = other.hour * 60 + other.minute
@@ -65,6 +79,16 @@ class Time:
         elif self.hour == other.hour:
             return self.minute <= other.minute
         return True
+    
+    def __gt__(self, other):
+        if not isinstance(other, Time):
+            raise AttributeError("Second object is not a Time")
+        if self.hour < other.hour:
+            return False
+        elif self.hour == other.hour:
+            return self.minute > other.minute
+        return True
+    
 
 class TimeBlock:
     def __init__(self, time_start, duration, energy, is_free=True, activity=None):
@@ -82,6 +106,9 @@ class TimeBlock:
 
     def get_start_time(self):
         return self.__time_start
+    
+    def get_duration(self):
+        return self.__duration
 
     def add_activity(self, activity):
         if not self.is_free:

@@ -1,6 +1,7 @@
 from structures import Energy, Activity, Time, DayBlock, Week
 from scheduler import match_activity, remove_activity_from_time
 from inputs import load_config, create_week
+from save_outputs import save_table
 
 def main():
     # config = load_config()
@@ -16,7 +17,7 @@ def main():
     # print("\n", week.days[1])
 
     week = create_week()
-    week.print_week()
+    save_table(week)
 
 
 if __name__ == "__main__":
